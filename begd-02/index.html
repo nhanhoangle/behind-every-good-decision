@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070b14" />
+  <title>Section 01 — Hello Analytics!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070b14;
+      --panel: rgba(19, 27, 45, .72);
+      --text: #f4f6ff;
+      --muted: #9aa8bd;
+      --line: rgba(201, 218, 255, .15);
+      --aqua: #82f3d0;
+      --violet: #a99cff;
+      --coral: #ff9b85
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Manrope, sans-serif;
+      overflow-x: hidden
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 10% 7%, rgba(110, 99, 255, .22), transparent 24%), radial-gradient(circle at 88% 30%, rgba(69, 233, 190, .13), transparent 23%), radial-gradient(circle at 55% 93%, rgba(255, 117, 98, .12), transparent 28%);
+      z-index: -2
+    }
+
+    .ambient:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(black, transparent 85%)
+    }
+
+    .nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px, 5vw, 80px);
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 11, 20, .72);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 9
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: -.04em
+    }
+
+    .logo span {
+      color: var(--aqua)
+    }
+
+    .nav-mid {
+      display: flex;
+      gap: 28px;
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    .nav-mid a:hover {
+      color: var(--text)
+    }
+
+    .index {
+      font: 500 11px 'DM Mono', monospace;
+      border: 1px solid var(--line);
+      padding: 9px 13px;
+      border-radius: 999px;
+      color: var(--aqua)
+    }
+
+    .hero {
+      max-width: 1240px;
+      margin: auto;
+      padding: 90px clamp(22px, 6vw, 80px) 73px;
+      min-height: 650px;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 60px
+    }
+
+    .kicker {
+      font: 500 11px 'DM Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: var(--aqua);
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .kicker:before {
+      content: "";
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--aqua)
+    }
+
+    h1 {
+      font: 700 clamp(53px, 7.5vw, 94px)/.93 'Playfair Display', serif;
+      letter-spacing: -.065em;
+      margin: 22px 0 25px;
+      max-width: 710px
+    }
+
+    h1 em {
+      font-weight: 600;
+      color: var(--violet)
+    }
+
+    .lead {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 540px;
+      margin: 0 0 33px
+    }
+
+    .actions {
+      display: flex;
+      gap: 15px;
+      align-items: center
+    }
+
+    .primary {
+      padding: 14px 19px;
+      background: var(--aqua);
+      color: #071016;
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: 9px
+    }
+
+    .primary:hover {
+      background: #b2ffe6
+    }
+
+    .meta {
+      font: 500 11px 'DM Mono', monospace;
+      color: #8390a6
+    }
+
+    .orb {
+      height: 430px;
+      position: relative
+    }
+
+    .ring {
+      position: absolute;
+      border: 1px solid rgba(169, 156, 255, .44);
+      border-radius: 50%;
+      inset: 34px 8px 15px 0;
+      transform: rotate(-19deg)
+    }
+
+    .ring:before,
+    .ring:after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(130, 243, 208, .3);
+      inset: 41px
+    }
+
+    .ring:after {
+      inset: 87px;
+      border-color: rgba(255, 155, 133, .35)
+    }
+
+    .core {
+      position: absolute;
+      width: 145px;
+      height: 145px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #edfffa 0, #82f3d0 22%, #6962e8 61%, #100f2d 72%);
+      box-shadow: 0 0 70px rgba(130, 243, 208, .42), 0 0 140px rgba(125, 94, 255, .25)
+    }
+
+    .tag {
+      position: absolute;
+      background: rgba(18, 27, 46, .9);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 13px 16px;
+      font: 500 11px 'DM Mono', monospace;
+      color: #dce4f7;
+      box-shadow: 0 17px 40px rgba(0, 0, 0, .27)
+    }
+
+    .tag b {
+      display: block;
+      color: var(--aqua);
+      font-size: 15px;
+      margin-bottom: 5px
+    }
+
+    .tag.one {
+      top: 38px;
+      right: 0
+    }
+
+    .tag.two {
+      bottom: 25px;
+      left: 5px
+    }
+
+    .strip {
+      border-block: 1px solid var(--line);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 16px 0;
+      color: #7e88a0;
+      font: 500 11px 'DM Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: .14em
+    }
+
+    .strip span {
+      display: inline-block;
+      padding-left: 32px
+    }
+
+    .strip i {
+      color: var(--coral);
+      font-style: normal;
+      margin: 0 28px
+    }
+
+    .chapters {
+      max-width: 1240px;
+      margin: auto;
+      padding: 112px clamp(22px, 6vw, 80px)
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 38px
+    }
+
+    .topline h2 {
+      font: 700 clamp(35px, 5vw, 58px)/.98 'Playfair Display', serif;
+      letter-spacing: -.06em;
+      margin: 0
+    }
+
+    .topline p {
+      margin: 0;
+      max-width: 292px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65
+    }
+
+    .list {
+      display: grid;
+      gap: 13px
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 27px 26px;
+      display: grid;
+      grid-template-columns: 90px 1fr 44px;
+      gap: 25px;
+      align-items: center;
+      transition: transform .22s, border-color .22s, background .22s
+    }
+
+    .card:hover {
+      transform: translateX(8px);
+      background: rgba(29, 39, 64, .9);
+      border-color: rgba(130, 243, 208, .55)
+    }
+
+    .num {
+      font: 500 11px 'DM Mono', monospace;
+      color: var(--aqua)
+    }
+
+    .card h3 {
+      font-size: 23px;
+      letter-spacing: -.045em;
+      margin: 0 0 7px
+    }
+
+    .card p {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--muted);
+      margin: 0
+    }
+
+    .arrow {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      font-size: 18px
+    }
+
+    .method {
+      max-width: 1240px;
+      margin: 0 auto 100px;
+      padding: 0 clamp(22px, 6vw, 80px)
+    }
+
+    .method-box {
+      border-radius: 20px;
+      padding: 45px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(119deg, #171843, #0c2830);
+      border: 1px solid rgba(130, 243, 208, .28)
+    }
+
+    .method-box:after {
+      content: "";
+      position: absolute;
+      width: 450px;
+      height: 450px;
+      border: 1px solid rgba(130, 243, 208, .17);
+      border-radius: 50%;
+      right: -175px;
+      top: -215px
+    }
+
+    .method-box h2 {
+      font: 700 clamp(32px, 4vw, 49px)/1 'Playfair Display', serif;
+      letter-spacing: -.055em;
+      margin: 0 0 12px
+    }
+
+    .method-box p {
+      color: #b3c4cb;
+      font-size: 14px;
+      max-width: 570px;
+      line-height: 1.6;
+      margin: 0
+    }
+
+    .pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+      position: relative;
+      z-index: 1
+    }
+
+    .pills span {
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 999px;
+      padding: 9px 12px;
+      font: 500 11px 'DM Mono', monospace;
+      color: #f3f6ff
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 27px clamp(22px, 5vw, 80px);
+      font: 12px 'DM Mono', monospace;
+      color: #758299;
+      display: flex;
+      justify-content: space-between
+    }
+
+    @media(max-width:780px) {
+      .nav-mid {
+        display: none
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 62px;
+        gap: 12px;
+        min-height: auto
+      }
+
+      .orb {
+        height: 310px
+      }
+
+      .topline {
+        align-items: start;
+        flex-direction: column;
+        gap: 18px
+      }
+
+      .card {
+        grid-template-columns: 54px 1fr 35px;
+        gap: 12px;
+        padding: 21px 17px
+      }
+
+      .card h3 {
+        font-size: 20px
+      }
+
+      .method-box {
+        padding: 30px 25px
+      }
+
+      footer {
+        gap: 15px;
+        flex-direction: column
+      }
+    }
+  </style>
+  <style>
+    .team {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 clamp(22px, 6vw, 80px) 105px
+    }
+
+    .team-intro {
+      max-width: 600px;
+      margin-bottom: 30px
+    }
+
+    .team h2 {
+      font: 700 clamp(35px, 5vw, 57px)/.98 "Playfair Display", serif;
+      letter-spacing: -.06em;
+      margin: 13px 0
+    }
+
+    .team-intro p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px
+    }
+
+    .member {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 22px;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between
+    }
+
+    .member:nth-child(2) {
+      border-color: rgba(130, 243, 208, .5)
+    }
+
+    .member:nth-child(3) {
+      border-color: rgba(169, 156, 255, .55)
+    }
+
+    .member small {
+      font: 500 10px "DM Mono", monospace;
+      color: var(--aqua)
+    }
+
+    .member h3 {
+      font-size: 20px;
+      letter-spacing: -.04em;
+      margin: 0
+    }
+
+    .member p {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 7px 0 0
+    }
+
+    (max-width:700px) {
+      .team-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .member {
+        min-height: 145px
+      }
+    }
+  </style>
+  <style>
+    .member {
+      overflow: hidden
+    }
+
+    .member img {
+      width: 54px;
+      height: 54px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid rgba(130, 243, 208, .45)
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ambient"></div>
+  <nav class="nav"><a class="logo" href="index.html">BEHIND EVERY <span>GOOD</span> DECISION</a>
+    <div class="nav-mid"><a href="#premise">The premise</a><a href="#chapters">Chapters</a><a
+        href="#methods">Methodologies</a></div><span class="index">SECTION 01 / 03</span>
+  </nav>
+  <main>
+    <section class="hero" id="premise">
+      <div>
+        <div class="kicker">Hello, analytics!</div>
+        <h1>Data becomes <em>direction.</em></h1>
+        <p class="lead">A contemporary reading experience for the opening section of <i>Behind Every Good
+            Decision</i>—where everyday evidence becomes an advantage you can act on.</p>
+        <div class="actions"><a class="primary" href="#chapters">Explore chapters →</a><span class="meta">3 CHAPTERS ·
+            40 MIN</span></div>
+      </div>
+      <div class="orb" aria-hidden="true">
+        <div class="ring"></div>
+        <div class="core"></div>
+        <div class="tag one"><b>01</b>Ask better questions</div>
+        <div class="tag two"><b>02</b>Make the next move</div>
+      </div>
+    </section>
+    <div class="strip"><span>Insight is the bridge between raw information and decisive action <i>✦</i> insight is the
+        bridge between raw information and decisive action <i>✦</i></span></div>
+    <section class="chapters" id="chapters">
+      <div class="topline">
+        <h2>Begin with<br>the signal.</h2>
+        <p>Three focused chapters introduce the logic, language, and practical tools of analytics.</p>
+      </div>
+      <div class="list"><a class="card" href="chapter1/index.html"><span class="num">CHAPTER 01</span>
+          <div>
+            <h3>Analytics or Die</h3>
+            <p>Why evidence-led organizations build an advantage in a changing market.</p>
+          </div><span class="arrow">↗</span>
+        </a><a class="card" href="chapter2/index.html"><span class="num">CHAPTER 02</span>
+          <div>
+            <h3>What Is Analytics?</h3>
+            <p>A straightforward framework for turning a business question into action.</p>
+          </div><span class="arrow">↗</span>
+        </a><a class="card" href="chapter3/index.html"><span class="num">CHAPTER 03</span>
+          <div>
+            <h3>Top Seven Methodologies</h3>
+            <p>Seven useful lenses for revealing patterns and making choices.</p>
+          </div><span class="arrow">↗</span>
+        </a></div>
+    </section>
+    <section class="method" id="methods">
+      <div class="method-box">
+        <div class="kicker">Chapter 03 preview</div>
+        <h2>Choose your lens.</h2>
+        <p>Most questions do not need complex models. Start with the analytical lens that matches the decision you need
+          to make.</p>
+        <div class="pills">
+          <span>Aggregate</span><span>Correlation</span><span>Trends</span><span>Sizing</span><span>Predictive</span><span>Segmentation</span><span>Life
+            cycle</span></div>
+      </div>
+    </section>
+    <section class="team">
+      <div class="team-intro">
+        <div class="kicker">Meet the team</div>
+        <h2>People behind the insight.</h2>
+        <p>Example team profiles for the researchers, analysts, designers, and writers behind this project.</p>
+      </div>
+      <div class="team-grid">
+        <article class="member"><img src="assets/team/minh-hien-01.jpg" alt="Minh Hien 01 profile photo"><small>PROJECT
+            LEAD</small>
+          <div>
+            <h3>Minh Hien 01</h3>
+            <p>Strategy &amp; research</p>
+          </div>
+        </article>
+        <article class="member"><img src="assets/team/minh-hien-02.jpg" alt="Minh Hien 02 profile photo"><small>DATA
+            LEAD</small>
+          <div>
+            <h3>Minh Hien 02</h3>
+            <p>Analysis &amp; insight</p>
+          </div>
+        </article>
+        <article class="member"><img src="assets/team/minh-hien-03.jpg" alt="Ciara 01 profile photo"><small>DESIGN
+            LEAD</small>
+          <div>
+            <h3>Ciara 01</h3>
+            <p>Visual storytelling</p>
+          </div>
+        </article>
+        <article class="member"><img src="assets/team/minh-hien-04.jpg" alt="Ciara 02 profile photo"><small>CONTENT
+            LEAD</small>
+          <div>
+            <h3>Ciara 02</h3>
+            <p>Writing &amp; editing</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer><span>SECTION 01 · HELLO ANALYTICS!</span><span>INSPIRED BY PIYANKA JAIN &amp; PUNEET SHARMA</span></footer>
+</body>
+
+</html>
